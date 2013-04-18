@@ -49,9 +49,12 @@ proc clean_recursively(path: string; verbose: bool): bool =
         echo("Directory $1 contains non deletable file $2, aborting" %
           [path, sub_path])
         result = true
+        return
     else:
       echo("Directory $1 contains no deletable item $2, aborting" %
         [path, sub_path])
+      result = true
+      return
 
 
 proc process(path: string; verbose, recursive: bool): bool =

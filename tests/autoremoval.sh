@@ -9,37 +9,45 @@ cd "${DIR}"
 
 rm -Rf todelete
 
+echo Test 1
 mkdir todelete
 ../awesome_rmdir todelete
 
+echo Test 2
 mkdir todelete
 touch todelete/.DS_Store
 ../awesome_rmdir todelete
 
+echo Test 3
 mkdir todelete
 touch todelete/.DS_Store
 touch todelete/Thumbs.db
 ../awesome_rmdir todelete
 
-# Running tests
+echo Test 4
 mkdir todelete
 ../awesome_rmdir todelete
 
+echo Test 5
 mkdir todelete
 touch todelete/.DS_Store
 ../awesome_rmdir todelete
 
+echo Test 6
 mkdir todelete
 touch todelete/.DS_Store
 touch todelete/Thumbs.db
 ../awesome_rmdir todelete -v
 
+echo Test 7
 mkdir todelete
 touch todelete/.DS_Store
 touch todelete/Thumbs.db
 touch todelete/meh.db
 ! ../awesome_rmdir todelete -v
-rm todelete/meh.db
+rm -f todelete/meh.db
+rm -f todelete/Thumbs.db
+rm -f todelete/.DS_Store
 rmdir todelete
 
-echo Finished
+echo Finished tests
