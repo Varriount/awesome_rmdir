@@ -7,7 +7,7 @@ const
 
 
 proc is_deletable(filename: string): bool =
-  ## Returns true if the file has a patter which can be deleted.
+  ## Returns true if the file has a pattern which can be deleted.
   if filename == ".DS_Store":
     result = true
   elif filename == "Thumbs.db":
