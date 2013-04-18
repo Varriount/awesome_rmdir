@@ -8,7 +8,6 @@ const
 
 proc is_deletable(filename: string): bool =
   ## Returns true if the file has a patter which can be deleted.
-  echo filename
   if filename == ".DS_Store":
     result = true
   elif filename == "Thumbs.db":
@@ -36,7 +35,26 @@ proc process_commandline(): Tcommandline_results =
     quit()
 
 
-proc process(path: string; verbose, recursive: bool) =
+proc clean_recursively(path: string; verbose: bool): bool =
+  ## Split method due to https://github.com/Araq/Nimrod/issues/391
+  ##
+  ## returs true if the parent should call return.
+  for kind, sub_path in walkDir(path):
+    case kind
+    of pcFile:
+      if sub_path.extractFilename.is_deletable:
+        if verbose: echo("Deleting $1" % sub_path)
+        removeFile(sub_path)
+      else:
+        echo("Directory $1 contains non deletable file $2, aborting" %
+          [path, sub_path])
+        result = true
+    else:
+      echo("Directory $1 contains no deletable item $2, aborting" %
+        [path, sub_path])
+
+
+proc process(path: string; verbose, recursive: bool): bool =
   ## Removes the specified directory, recursively if needed.
   if not existsDir(path):
     echo "Not a valid directory " & path
@@ -45,31 +63,19 @@ proc process(path: string; verbose, recursive: bool) =
   try:
     if verbose: echo "Removing dir " & path
     removeFile(path)
-    echo "haya!"
+    result = true
   except EOS:
-    if verbose: echo("Failed to remove $1 cleanly" % path)
-    for kind, sub_path in walkDir(path):
-      case kind
-      of pcFile:
-        if sub_path.extractFilename.is_deletable:
-          if verbose: echo("Deleting $1" % sub_path)
-          echo "Hey!"
-          removeFile(sub_path)
-        else:
-          echo("Directory $1 contains non deletable file $2, aborting" %
-            [path, sub_path])
-          return
-      else:
-        echo("Directory $1 contains no deletable item $2, aborting" %
-          [path, sub_path])
+    if verbose: echo("Failed to remove $1 cleanly, trying harder..." % path)
+    if clean_recursively(path, verbose):
+      if verbose: echo("...sorry, could not")
+      return
     # Ok, try again.
     try:
-      echo "Hhhhh " & path
       removeFile(path)
-      echo "Hey"
+      result = true
+      if verbose: echo("...and removed $1" % path)
     except EOS:
-      echo "Hey222"
-      echo("Even though $1 is empty it can't be removed!" % path)
+      quit("...even though $1 is empty it can't be removed!" % path)
 
 
 when isMainModule:
@@ -78,5 +84,9 @@ when isMainModule:
     verbose = args.options.hasKey(PARAM_VERBOSE[0])
     recursive = args.options.hasKey(PARAM_RECURSIVE[0])
 
+  var count = 0
   for param in args.positional_parameters:
-    process(param.str_val, verbose, recursive)
+    if process(param.str_val, verbose, recursive):
+      count += 1
+  if count != args.positional_parameters.len:
+    quit("Could not remove all input parameters.")
