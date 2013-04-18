@@ -22,8 +22,8 @@ proc process_commandline(): Tcommandline_results =
   var params: seq[Tparameter_specification] = @[]
   params.add(new_parameter_specification(names = PARAM_VERBOSE,
     help_text = "Be verbose about actions"))
-  params.add(new_parameter_specification(names = PARAM_RECURSIVE,
-    help_text = "Remove directories recursively"))
+  #params.add(new_parameter_specification(names = PARAM_RECURSIVE,
+  #  help_text = "Remove directories recursively"))
   params.add(new_parameter_specification(names = PARAM_HELP,
     help_text = "Displays commandline help and exits", consumes = PK_HELP))
 
