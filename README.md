@@ -36,19 +36,21 @@ Installation and usage
 You are meant to know what you are doing, so this will be brief:
 
 * Install [Nimrod](http://nimrod-code.org).
-* Install [Nimrod's babel package manager](https://github.com/nimrod-code/babel).
-* Through babel install the [argument_parser module](https://github.com/gradha/argument_parser):
+* Install [Nimrod's babel package
+  manager](https://github.com/nimrod-code/babel).
+* Through babel install the [argument_parser
+  module](https://github.com/gradha/argument_parser):
 
-    babel install argument_parser
+		babel install argument_parser
 
 * Finally compile the ``awesome_rmdir`` command:
 
-    nimrod c -d:release awesome_rmdir.nim
+		nimrod c -d:release awesome_rmdir.nim
 
 * Copy the generated ``awesome_rmdir`` binary to somewhere in your path, or
   create a bash alias for rmdir so it gets run automatically:
 
-    alias rmdir=`/path/to/awesome_rmdir`
+		alias rmdir=`/path/to/awesome_rmdir`
 
 
 Feedback
