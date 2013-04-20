@@ -53,6 +53,17 @@ You are meant to know what you are doing, so this will be brief:
 		alias rmdir=`/path/to/awesome_rmdir`
 
 
+Git branches
+============
+
+This project uses the [git-flow branching
+model](https://github.com/nvie/gitflow). Which means the ``master`` default
+branch doesn't *see* much movement, development happens in another branch like
+``develop``. Most people will be fine using the ``master`` branch, but if you
+want to contribute something please check out first the ``develop`` brach and
+do pull requests against that.
+
+
 Feedback
 ========
 
