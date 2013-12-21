@@ -53,6 +53,13 @@ You are meant to know what you are doing, so this will be brief:
 		alias rmdir=`/path/to/awesome_rmdir`
 
 
+Changes
+=======
+
+This is version 0.3.1. For a list of changes see the
+[docs/CHANGES.md](docs/CHANGES.md) file.
+
+
 Git branches
 ============
 
