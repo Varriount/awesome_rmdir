@@ -1,5 +1,6 @@
 # Global patterns
 *.exe
+*.html
 *.swp
 .DS_Store
 nimcache/
