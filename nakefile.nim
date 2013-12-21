@@ -1,5 +1,7 @@
-import nake, os, osproc, htmlparser, xmltree, strtabs, times
+import nake, os, osproc, htmlparser, xmltree, strtabs, times, awesome_rmdir,
+  zipfiles
 
+const name = "awesome_rmdir"
 let
   rst_files = @["docs"/"CHANGES", "docs"/"release_steps",
     "LICENSE", "README", "docindex"]
@@ -22,28 +24,28 @@ proc change_rst_links_to_html(html_file: string) =
 
 proc needs_refresh(target: string, src: varargs[string]): bool =
   assert len(src) > 0, "Pass some parameters to check for"
-  var targetTime: float
+  var TARGET_TIME: float
   try:
-    targetTime = toSeconds(getLastModificationTime(target))
+    TARGET_TIME = toSeconds(getLastModificationTime(target))
   except EOS:
     return true
 
   for s in src:
     let srcTime = toSeconds(getLastModificationTime(s))
-    if srcTime > targetTime:
+    if srcTime > TARGET_TIME:
       return true
 
 
 iterator all_rst_files(): tuple[src, dest: string] =
   for rst_name in rst_files:
-    var r: tuple[src, dest: string]
-    r.src = rst_name & ".rst"
+    var R: tuple[src, dest: string]
+    R.src = rst_name & ".rst"
     # Ignore files if they don't exist, babel version misses some.
-    if not r.src.existsFile:
-      echo "Ignoring missing ", r.src
+    if not R.src.existsFile:
+      echo "Ignoring missing ", R.src
       continue
-    r.dest = rst_name & ".html"
-    yield r
+    R.dest = rst_name & ".html"
+    yield R
 
 task "doc", "Generates HTML version of the documentation":
   # Generate html files from the rst docs.
@@ -65,6 +67,31 @@ task "check_doc", "Validates rst format for a subset of documentation":
       echo output
 
 task "clean", "Removes temporal files, mainly":
+  removeDir("nimcache")
   for rst_file, html_file in all_rst_files():
     echo "Removing ", html_file
     html_file.removeFile
+
+template os_task(define_name): stmt {.immediate.} =
+  task "dist_" & define_name, "Generate distribution binary for " & define_name:
+    runTask "clean"
+    runTask "doc"
+    let
+      dname = name & "-" & VERSION_STR & "-" & define_name
+      zname = dname & ".zip"
+    removeFile(name)
+    removeFile(zname)
+    direShell("nimrod c -d:release --out:" & name & " " & name & ".nim")
+    var Z: TZipArchive
+    if not Z.open(zname, fmWrite):
+      quit("Couldn't open zip " & zname)
+    try:
+      Z.addFile(dname / name, name)
+      for rst_file, html_file in all_rst_files():
+        Z.addFile(dname / html_file, html_file)
+    finally:
+      Z.close
+    echo "Built ", zname, " sized ", zname.getFileSize, " bytes."
+
+when defined(macosx): os_task("macosx")
+when defined(linux): os_task("linux")

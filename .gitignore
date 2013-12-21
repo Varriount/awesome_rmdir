@@ -7,4 +7,5 @@ nimcache/
 
 # Full paths.
 /awesome_rmdir
+/awesome_rmdir*zip
 /nakefile
