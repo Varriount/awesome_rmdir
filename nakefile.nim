@@ -67,24 +67,30 @@ task "check_doc", "Validates rst format for a subset of documentation":
       echo output
 
 task "clean", "Removes temporal files, mainly":
+  removeDir("nimcache")
   for rst_file, html_file in all_rst_files():
     echo "Removing ", html_file
     html_file.removeFile
 
 template os_task(define_name): stmt {.immediate.} =
   task "dist_" & define_name, "Generate distribution binary for " & define_name:
+    runTask "clean"
+    runTask "doc"
     let
       dname = name & "-" & VERSION_STR & "-" & define_name
       zname = dname & ".zip"
-    removeDir("nimcache")
     removeFile(name)
     removeFile(zname)
     direShell("nimrod c -d:release --out:" & name & " " & name & ".nim")
     var Z: TZipArchive
     if not Z.open(zname, fmWrite):
       quit("Couldn't open zip " & zname)
-    try: Z.addFile(dname / name, name)
-    finally: Z.close
+    try:
+      Z.addFile(dname / name, name)
+      for rst_file, html_file in all_rst_files():
+        Z.addFile(dname / html_file, html_file)
+    finally:
+      Z.close
     echo "Built ", zname, " sized ", zname.getFileSize, " bytes."
 
 when defined(macosx): os_task("macosx")
