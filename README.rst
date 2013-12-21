@@ -32,27 +32,41 @@ License
 `MIT license <LICENSE.rst>`_.
 
 
-Installation and usage
-======================
+Installation
+============
 
-You are meant to know what you are doing, so this will be brief:
+Stable version
+--------------
 
-* Install `Nimrod <http://nimrod-lang.org>`_.
-* Install `Nimrod's babel package manager
-  <https://github.com/nimrod-code/babel>`_.
-* Through babel install the `argument_parser module
-  <https://github.com/gradha/argument_parser>`_::
+Install the `Nimrod compiler <http://nimrod-lang.org>`_. Then use `Nimrod's
+babel package manager <https://github.com/nimrod-code/babel>`_ to install the
+binary::
 
-    babel install argument_parser
+    $ babel update
+    $ babel install awesome_rmdir
 
-* Finally compile the ``awesome_rmdir`` command::
+Development version
+-------------------
 
-    nimrod c -d:release awesome_rmdir.nim
+Install the `Nimrod compiler <http://nimrod-lang.org>`_. Then use `Nimrod's
+babel package manager <https://github.com/nimrod-code/babel>`_ to install
+locally the github checkout::
 
-* Copy the generated ``awesome_rmdir`` binary to somewhere in your path, or
-  create a bash alias for rmdir so it gets run automatically::
+    $ git clone https://github.com/gradha/awesome_rmdir.git
+    $ cd awesome_rmdir
+    $ git checkout develop
+    $ babel install
 
-    alias rmdir=`/path/to/awesome_rmdir`
+Binary install
+--------------
+
+Go to `https://github.com/gradha/awesome_rmdir/releases
+<https://github.com/gradha/awesome_rmdir/releases>`_ and fetch one of the
+binary packages attached to the released versions, preferably a recent one.
+Unpack, then copy the ``awesome_rmdir`` binary to somewhere in your path, or
+create a bash alias for ``rmdir`` so it gets run automatically::
+
+    alias rmdir=`/path/to/installed/awesome_rmdir/binary`
 
 
 Changes

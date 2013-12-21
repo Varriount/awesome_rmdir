@@ -47,6 +47,10 @@ iterator all_rst_files(): tuple[src, dest: string] =
     R.dest = rst_name & ".html"
     yield R
 
+task "babel", "Uses babel to install awesome_rmdir locally":
+  if shell("babel install -y"):
+    echo "Installed."
+
 task "doc", "Generates HTML version of the documentation":
   # Generate html files from the rst docs.
   for rst_file, html_file in all_rst_files():
