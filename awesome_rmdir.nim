@@ -4,6 +4,21 @@ const
   PARAM_VERBOSE = @["-v", "--verbose"]
   PARAM_RECURSIVE = @["-r", "--recursive"]
   PARAM_HELP = @["-h", "--help"]
+  PARAM_VERSION = @["-V", "--version"]
+
+  VERSION_STR* = "0.2.1" ## Program version as a string.
+  VERSION_INT* = (major: 0, minor: 2, maintenance: 1) ## \
+  ## Program version as an integer tuple.
+  ##
+  ## Major version changes mean significant new features or a break in
+  ## commandline backwards compatibility, either through removal of switches or
+  ## modification of their purpose.
+  ##
+  ## Minor version changes can add switches. Minor
+  ## odd versions are development/git/unstable versions. Minor even versions
+  ## are public stable releases.
+  ##
+  ## Maintenance version changes mean bugfixes or non commandline changes.
 
 
 proc is_deletable(filename: string): bool =
@@ -26,8 +41,14 @@ proc process_commandline(): Tcommandline_results =
   #  help_text = "Remove directories recursively"))
   params.add(new_parameter_specification(names = PARAM_HELP,
     help_text = "Displays commandline help and exits", consumes = PK_HELP))
+  params.add(new_parameter_specification(names = PARAM_VERSION,
+    help_text = "Displays the current version and exists"))
 
   result = parse(params)
+
+  if result.options.hasKey(PARAM_VERSION[0]):
+    echo "Version ", VERSION_STR
+    quit()
 
   if result.positional_parameters.len < 1:
     echo "Please specify directories to be removed"

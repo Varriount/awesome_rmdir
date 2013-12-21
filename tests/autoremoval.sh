@@ -50,4 +50,8 @@ rm -f todelete/Thumbs.db
 rm -f todelete/.DS_Store
 rmdir todelete
 
-echo Finished tests
+echo Test 8
+mkdir ./--version
+../awesome_rmdir -- --version
+
+echo Finished tests succesfully

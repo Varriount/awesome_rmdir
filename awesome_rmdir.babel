@@ -1,0 +1,21 @@
+[Package]
+name          = "awesome_rmdir"
+version       = "0.2.1"
+author        = "Grzegorz Adam Hankiewicz"
+description   = """Command to remove acceptably empty directories."""
+license       = "MIT"
+bin           = "awesome_rmdir"
+InstallFiles = """
+
+LICENSE.rst
+README.rst
+awesome_rmdir.nim
+docindex.rst
+docs/CHANGES.rst
+nakefile.nim
+nakefile.nimrod.cfg
+
+"""
+
+[Deps]
+Requires: "nake >= 1.0, argument_parser"
