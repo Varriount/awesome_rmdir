@@ -1,7 +1,9 @@
 # Global patterns
+*.exe
 *.swp
 .DS_Store
 nimcache/
 
 # Full paths.
 /awesome_rmdir
+/nakefile
