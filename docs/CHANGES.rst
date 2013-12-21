@@ -9,6 +9,8 @@ v0.3.1, ????-??-??
 * `Added version switch <https://github.com/gradha/awesome_rmdir/issues/6>`_.
 * `Changed documentation to rst format
   <https://github.com/gradha/awesome_rmdir/issues/2>`_.
+* `Prepared binary distribution
+  `<https://github.com/gradha/awesome_rmdir/issues/5>`_.
 
 v0.2.0, 2013-04-18
 ------------------
