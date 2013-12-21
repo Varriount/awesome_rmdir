@@ -6,8 +6,8 @@ const
   PARAM_HELP = @["-h", "--help"]
   PARAM_VERSION = @["-V", "--version"]
 
-  VERSION_STR* = "0.3.1" ## Program version as a string.
-  VERSION_INT* = (major: 0, minor: 3, maintenance: 1) ## \
+  VERSION_STR* = "0.2.1" ## Program version as a string.
+  VERSION_INT* = (major: 0, minor: 2, maintenance: 1) ## \
   ## Program version as an integer tuple.
   ##
   ## Major version changes mean significant new features or a break in

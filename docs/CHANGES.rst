@@ -2,7 +2,7 @@
 Awesome rmdir changes log
 =========================
 
-v0.3.1, ????-??-??
+v0.2.1, 2013-12-21
 ------------------
 
 * `Added changes log <https://github.com/gradha/awesome_rmdir/issues/3>`_.
