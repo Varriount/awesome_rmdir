@@ -15,7 +15,7 @@ v0.2.1, 2013-12-21
 * `Changed documentation to rst format
   <https://github.com/gradha/awesome_rmdir/issues/2>`_.
 * `Prepared binary distribution
-  `<https://github.com/gradha/awesome_rmdir/issues/5>`_.
+  <https://github.com/gradha/awesome_rmdir/issues/5>`_.
 * `Added babel binary package
   <https://github.com/gradha/awesome_rmdir/issues/4>`_.
 
