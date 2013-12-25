@@ -48,8 +48,8 @@ iterator all_rst_files(): tuple[src, dest: string] =
     yield R
 
 task "babel", "Uses babel to install awesome_rmdir locally":
-  if shell("babel install -y"):
-    echo "Installed."
+  direshell("babel install -y")
+  echo "Installed."
 
 task "doc", "Generates HTML version of the documentation":
   # Generate html files from the rst docs.
